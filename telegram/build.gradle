@@ -1,20 +1,24 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
-
 plugins {
     alias libs.plugins.kotlinx.binaryCompatibilityValidator
     alias libs.plugins.kotlin.jvm
+    id("maven-publish")
 }
 
-group 'com.github.kotlintelegrambot'
-version '6.2.0'
+group = "com.github.kotlintelegrambot"
+version = "6.3.1-alpha1"
 
-repositories {
-    mavenCentral()
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = 'telegram'
+            version = version
+            from components.java
+        }
+    }
 }
+
 
 dependencies {
     // Networking
@@ -32,7 +36,8 @@ dependencies {
     testImplementation libs.kotlinx.coroutines.test
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
+tasks.register('sourcesJar', Jar) {
+    dependsOn classes
     archiveClassifier.set("sources")
     from sourceSets.main.allSource
 }
