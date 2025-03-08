@@ -1,0 +1,8 @@
+jdk:
+  - openjdk11
+before_install:
+  - ./gradlew :telegram:build -x ktlint -x apiCheck
+install:
+  - ./gradlew :telegram:publishToMavenLocal -x ktlint -x apiCheck
+modules:
+  - telegram
